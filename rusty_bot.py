@@ -12,18 +12,15 @@ from creds import *
 
 now = datetime.now()
 
-
 SALES_REPORT_FILEPATH = '/etc/apis/eshop-api/data/output/reports/'
 LOG_FILENAME = '/etc/scripts/famiboards-deals-bot/logs/log-{}.txt'.format(now.strftime('%Y-%m-%d'))
 LOG_FORMAT = '{} | {}: {}\n'
 REQUEST_URL_FORMAT = "{}?order=post_date&direction=desc"
-
 XF_HEADERS = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'XF-Api-Key': XF_API_KEY
 }
 XF_URL = "https://famiboards.com/api"
-
 FORUMS = {
     2: 'Treehouse',
     8: 'The Roost',
@@ -31,10 +28,18 @@ FORUMS = {
     14: 'Rustys Real Deals',
 }
 
-post_text = ''
+sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 
-files = os.listdir(SALES_REPORT_FILEPATH)
-print(files)
+if len(sales_report_files) > 0:
+
+    THREAD_TITLE = "Rusty's Sales Roundup | {}".format(now.strftime('%Y'))
+    print(THREAD_TITLE)
+    if len(sales_report_files) == 1:
+        print('There is only one sales report file.')
+    else:
+        print('There are {} sales report files.'.format(len(sales_report_files)))
+else:
+    print('There are currently no sales report files.')
 
 # response = requests.post(
 #     XF_URL + '/threads/?node_id=14&title="hey, test!"&message=this is a test...&discussion_open=true',
