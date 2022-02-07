@@ -33,16 +33,19 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 if len(sales_report_files) > 0:
 
     THREAD_TITLE = "Rusty's Sales Roundup | {}".format(now.strftime('%m-%d-%Y'))
-    print(THREAD_TITLE)
+
+    post_text = ''
+
     if len(sales_report_files) == 1:
         print('There is only one sales report file.')
+        response = requests.post(
+            XF_URL + '/threads/?node_id=14&title={title}&message={post_text}&discussion_open=true'.format(
+                THREAD_TITLE, post_text
+            ),
+            headers=XF_HEADERS
+        ).json()
+        pprint(response)
     else:
         print('There are {} sales report files.'.format(len(sales_report_files)))
 else:
     print('There are currently no sales report files.')
-
-# response = requests.post(
-#     XF_URL + '/threads/?node_id=14&title="hey, test!"&message=this is a test...&discussion_open=true',
-#     headers=XF_HEADERS,
-# ).json()
-# pprint(response)
