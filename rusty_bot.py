@@ -61,7 +61,7 @@ if len(sales_report_files) > 0:
         with open(THREAD_BODY_FILEPATH, 'r') as f:
             POST_TEXT = f.read()
 
-        new_thread = requests.post(
+        response = requests.post(
             URL,
             headers=XF_HEADERS,
             data={
@@ -71,8 +71,8 @@ if len(sales_report_files) > 0:
                 "discussion_open": True,
             }
         )
-        new_thread_id = new_thread.thread_id
-        print('New thread id: ' + new_thread_id)
+        new_thread_id = response.json()['thread']['thread_id']
+        print('New thread id: ' + str(new_thread_id))
 
         for file in THREAD_POST_FILES:
             with open(SALES_REPORT_FILEPATH + file, 'r') as f:
