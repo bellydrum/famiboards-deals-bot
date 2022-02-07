@@ -32,27 +32,59 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 
 if len(sales_report_files) > 0:
 
+    URL = XF_URL + '/threads/'
     THREAD_TITLE = "NA eShop Deals Roundup | {}".format(now.strftime('%m-%d-%Y'))
-
-    post_text = 'This is a test. [B]It works![/B]'
+    POST_TEXT = 'This is a test. [B]It works![/B]'
 
     if len(sales_report_files) == 1:
 
-        with open(SALES_REPORT_FILEPATH + sales_report_files[0], 'r') as f:
-            post_text = f.read()
-        pprint(post_text)
-        url = XF_URL + '/threads/?node_id=14&discussion_open=true'
-        print(url)
+        filepath = SALES_REPORT_FILEPATH + sales_report_files[0]
+        with open(filepath, 'r') as f:
+            POST_TEXT = f.read()
+
         response = requests.post(
-            url,
+            URL,
             headers=XF_HEADERS,
             data={
                 "node_id": 14,
                 "title": THREAD_TITLE,
-                "message": post_text,
+                "message": POST_TEXT,
+                "discussion_open": True,
             }
         ).json()
     else:
         print('There are {} sales report files.'.format(len(sales_report_files)))
+
+        THREAD_BODY_FILEPATH = SALES_REPORT_FILEPATH + sales_report_files[0]
+        THREAD_POST_FILES = sales_report_files[1:]
+
+        with open(THREAD_BODY_FILEPATH, 'r') as f:
+            POST_TEXT = f.read()
+
+        new_thread = requests.post(
+            URL,
+            headers=XF_HEADERS,
+            data={
+                "node_id": 14,
+                "title": THREAD_TITLE,
+                "message": POST_TEXT,
+                "discussion_open": True,
+            }
+        )
+        new_thread_id = new_thread.thread_id
+        print('New thread id: ' + new_thread_id)
+
+        for file in THREAD_POST_FILES:
+            with open(SALES_REPORT_FILEPATH + file, 'r') as f:
+                POST_TEXT = f.read()
+            requests.post(
+                XF_URL + '/posts/',
+                headers=XF_HEADERS,
+                data={
+                    "thread_id": new_thread_id,
+                    "message": POST_TEXT,
+                }
+            )
+
 else:
     print('There are currently no sales report files.')
