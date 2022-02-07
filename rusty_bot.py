@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+from os import listdir
+
 from datetime import datetime
 import json
 import requests
@@ -11,7 +13,7 @@ from creds import *
 now = datetime.now()
 
 
-SALES_REPORT_FILEPATH = '/etc/apis/eshop-api/data/output/reports/salesReportPostText_1.txt'
+SALES_REPORT_FILEPATH = '/etc/apis/eshop-api/data/output/reports/'
 LOG_FILENAME = '/etc/scripts/famiboards-deals-bot/logs/log-{}.txt'.format(now.strftime('%Y-%m-%d'))
 LOG_FORMAT = '{} | {}: {}\n'
 REQUEST_URL_FORMAT = "{}?order=post_date&direction=desc"
@@ -31,8 +33,8 @@ FORUMS = {
 
 post_text = ''
 
-with open(SALES_REPORT_FILEPATH, 'r') as f:
-    print(f.read())
+files = os.listdir(SALES_REPORT_FILEPATH)
+print(files)
 
 # response = requests.post(
 #     XF_URL + '/threads/?node_id=14&title="hey, test!"&message=this is a test...&discussion_open=true',
