@@ -12,7 +12,7 @@ from creds import *
 
 now = datetime.now()
 
-SALES_REPORT_FILEPATH = '/etc/apis/eshop-api/data/output/reports/'
+SALES_REPORT_FILEPATH = '/etc/apis/eshop-api-node/data/output/reports/'
 LOG_FILENAME = '/etc/scripts/famiboards-deals-bot/logs/log-{}.txt'.format(now.strftime('%Y-%m-%d'))
 LOG_FORMAT = '{} | {}: {}\n'
 REQUEST_URL_FORMAT = "{}?order=post_date&direction=desc"
