@@ -32,12 +32,15 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 
 if len(sales_report_files) > 0:
 
-    THREAD_TITLE = "Rusty's Sales Roundup | {}".format(now.strftime('%m-%d-%Y'))
+    THREAD_TITLE = "NA eShop Deals Roundup | {}".format(now.strftime('%m-%d-%Y'))
 
     post_text = 'This is a test. [B]It works![/B]'
 
     if len(sales_report_files) == 1:
-        print('There is only one sales report file.')
+
+        with open(sales_report_files[0], 'r') as f:
+            post_text = f.read()
+        pprint(post_text)
         url = XF_URL + '/threads/?node_id=14&discussion_open=true'
         print(url)
         response = requests.post(
@@ -49,7 +52,6 @@ if len(sales_report_files) > 0:
                 message: post_text,
             }
         ).json()
-        pprint(response)
     else:
         print('There are {} sales report files.'.format(len(sales_report_files)))
 else:
