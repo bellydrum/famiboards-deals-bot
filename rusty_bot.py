@@ -38,6 +38,10 @@ if len(sales_report_files) > 0:
 
     if len(sales_report_files) == 1:
         print('There is only one sales report file.')
+        url = XF_URL + f'/threads/?node_id=14&title=f{0}&message={1}&discussion_open=true'.format(
+            THREAD_TITLE, post_text
+        )
+        print(url)
         response = requests.post(
             XF_URL + '/threads/?node_id=14&title={title}&message={post_text}&discussion_open=true'.format(
                 THREAD_TITLE, post_text
