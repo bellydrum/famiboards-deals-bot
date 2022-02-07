@@ -38,7 +38,7 @@ if len(sales_report_files) > 0:
 
     if len(sales_report_files) == 1:
 
-        with open(sales_report_files[0], 'r') as f:
+        with open(SALES_REPORT_FILEPATH + sales_report_files[0], 'r') as f:
             post_text = f.read()
         pprint(post_text)
         url = XF_URL + '/threads/?node_id=14&discussion_open=true'
