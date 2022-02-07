@@ -47,9 +47,9 @@ if len(sales_report_files) > 0:
             url,
             headers=XF_HEADERS,
             data={
-                node_id: 14,
-                title: THREAD_TITLE,
-                message: post_text,
+                "node_id": 14,
+                "title": THREAD_TITLE,
+                "message": post_text,
             }
         ).json()
     else:
