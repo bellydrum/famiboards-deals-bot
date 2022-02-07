@@ -32,7 +32,7 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 
 if len(sales_report_files) > 0:
 
-    THREAD_TITLE = "Rusty's Sales Roundup | {}".format(now.strftime('%Y'))
+    THREAD_TITLE = "Rusty's Sales Roundup | {}".format(now.strftime('%m-%d-%Y'))
     print(THREAD_TITLE)
     if len(sales_report_files) == 1:
         print('There is only one sales report file.')
