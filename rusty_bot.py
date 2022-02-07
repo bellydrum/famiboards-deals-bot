@@ -4,12 +4,14 @@ from datetime import datetime
 import json
 import requests
 import tweepy
+from pprint import pprint
 
 from creds import *
 
 now = datetime.now()
 
 
+SALES_REPORT_FILEPATH = '/etc/apis/eshop-api/data/output/reports/salesReportPostText_1.txt'
 LOG_FILENAME = '/etc/scripts/famiboards-deals-bot/logs/log-{}.txt'.format(now.strftime('%Y-%m-%d'))
 LOG_FORMAT = '{} | {}: {}\n'
 REQUEST_URL_FORMAT = "{}?order=post_date&direction=desc"
@@ -27,5 +29,13 @@ FORUMS = {
     14: 'Rustys Real Deals',
 }
 
-response = requests.get(XF_URL, headers=XF_HEADERS).json()
-print(response)
+post_text = ''
+
+with open(SALES_REPORT_FILEPATH, 'r') as f:
+    print(f.read())
+
+# response = requests.post(
+#     XF_URL + '/threads/?node_id=14&title="hey, test!"&message=this is a test...&discussion_open=true',
+#     headers=XF_HEADERS,
+# ).json()
+# pprint(response)
