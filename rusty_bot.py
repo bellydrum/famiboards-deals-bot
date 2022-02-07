@@ -33,6 +33,16 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 sales_report_files_us = [i for i in sales_report_files if 'america' in i.lower()]
 sales_report_files_eu = [i for i in sales_report_files if 'europe' in i.lower()]
 
+print('All sales report files:')
+for i in sales_report_files:
+    print(i)
+print('US sales report files:')
+for i in sales_report_files_us:
+    print(i)
+print('EU sales report files:')
+for i in sales_report_files_eu:
+    print(i)
+
 # generate and post US sales thread
 if len(sales_report_files_us) > 0:
 
@@ -152,4 +162,4 @@ if len(sales_report_files_eu) > 0:
             )
 
 else:
-    print('There are currently no US sales report files.')
+    print('There are currently no EU sales report files.')
