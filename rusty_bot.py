@@ -33,16 +33,6 @@ sales_report_files = os.listdir(SALES_REPORT_FILEPATH)
 sales_report_files_us = [i for i in sales_report_files if 'america' in i.lower()]
 sales_report_files_eu = [i for i in sales_report_files if 'europe' in i.lower()]
 
-print('All sales report files:')
-for i in sales_report_files:
-    print(i)
-print('US sales report files:')
-for i in sales_report_files_us:
-    print(i)
-print('EU sales report files:')
-for i in sales_report_files_eu:
-    print(i)
-
 # generate and post US sales thread
 if len(sales_report_files_us) > 0:
 
@@ -107,59 +97,60 @@ else:
 # generate and post EU sales thread
 if len(sales_report_files_eu) > 0:
 
-    URL = XF_URL + '/threads/'
-    THREAD_TITLE = "EU eShop Deals Roundup | {}".format(now.strftime('%m-%d-%Y'))
-    POST_TEXT = ''
-
-    if len(sales_report_files_eu) == 1:
-
-        filepath = SALES_REPORT_FILEPATH + sales_report_files_eu[0]
-        with open(filepath, 'r') as f:
-            POST_TEXT = f.read()
-
-        response = requests.post(
-            URL,
-            headers=XF_HEADERS,
-            data={
-                "node_id": 14,
-                "title": THREAD_TITLE,
-                "message": POST_TEXT,
-                "discussion_open": True,
-            }
-        ).json()
-    else:
-        print('There are {} sales report files.'.format(len(sales_report_files_eu)))
-
-        THREAD_BODY_FILEPATH = SALES_REPORT_FILEPATH + sales_report_files_eu[0]
-        THREAD_POST_FILES = sales_report_files_eu[1:]
-
-        with open(THREAD_BODY_FILEPATH, 'r') as f:
-            POST_TEXT = f.read()
-
-        response = requests.post(
-            URL,
-            headers=XF_HEADERS,
-            data={
-                "node_id": 14,
-                "title": THREAD_TITLE,
-                "message": POST_TEXT,
-                "discussion_open": True,
-            }
-        )
-        new_thread_id = response.json()['thread']['thread_id']
-        print('New thread id: ' + str(new_thread_id))
-
-        for file in THREAD_POST_FILES:
-            with open(SALES_REPORT_FILEPATH + file, 'r') as f:
-                POST_TEXT = f.read()
-            requests.post(
-                XF_URL + '/posts/',
-                headers=XF_HEADERS,
-                data={
-                    "thread_id": new_thread_id,
-                    "message": POST_TEXT,
-                }
-            )
+    # URL = XF_URL + '/threads/'
+    # THREAD_TITLE = "EU eShop Deals Roundup | {}".format(now.strftime('%m-%d-%Y'))
+    # POST_TEXT = ''
+    #
+    # if len(sales_report_files_eu) == 1:
+    #
+    #     filepath = SALES_REPORT_FILEPATH + sales_report_files_eu[0]
+    #     with open(filepath, 'r') as f:
+    #         POST_TEXT = f.read()
+    #
+    #     response = requests.post(
+    #         URL,
+    #         headers=XF_HEADERS,
+    #         data={
+    #             "node_id": 14,
+    #             "title": THREAD_TITLE,
+    #             "message": POST_TEXT,
+    #             "discussion_open": True,
+    #         }
+    #     ).json()
+    # else:
+    #     print('There are {} sales report files.'.format(len(sales_report_files_eu)))
+    #
+    #     THREAD_BODY_FILEPATH = SALES_REPORT_FILEPATH + sales_report_files_eu[0]
+    #     THREAD_POST_FILES = sales_report_files_eu[1:]
+    #
+    #     with open(THREAD_BODY_FILEPATH, 'r') as f:
+    #         POST_TEXT = f.read()
+    #
+    #     response = requests.post(
+    #         URL,
+    #         headers=XF_HEADERS,
+    #         data={
+    #             "node_id": 14,
+    #             "title": THREAD_TITLE,
+    #             "message": POST_TEXT,
+    #             "discussion_open": True,
+    #         }
+    #     )
+    #     new_thread_id = response.json()['thread']['thread_id']
+    #     print('New thread id: ' + str(new_thread_id))
+    #
+    #     for file in THREAD_POST_FILES:
+    #         with open(SALES_REPORT_FILEPATH + file, 'r') as f:
+    #             POST_TEXT = f.read()
+    #         requests.post(
+    #             XF_URL + '/posts/',
+    #             headers=XF_HEADERS,
+    #             data={
+    #                 "thread_id": new_thread_id,
+    #                 "message": POST_TEXT,
+    #             }
+    #         )
+    pass
 
 else:
     print('There are currently no EU sales report files.')
