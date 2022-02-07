@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-from os import listdir
+import os
 
 from datetime import datetime
 import json
